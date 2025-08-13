@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gastrobar</title>
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+        rel="stylesheet" 
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!--BARRA DE NAVEGACION-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a href="#" class="navbar-brand">
+                <span class="text-primary">Gastro</span>Bar
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbar-star" aria-controls="navbar-star" aria-expanded="false"
+                    aria-label="Toggler navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbar-star">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="agendacita.html">Agenda cita</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="dropdown-menu dropdown-menu-end dropdown-cart" aria-labelledby="navbarDropdownCart" style="min-width: 300px; padding: 0;">
+    <div class="p-3">
+        <h6 class="dropdown-header">Tu Carrito</h6>
+        <?php if(empty($_SESSION['carrito'])): ?>
+            <div class="dropdown-item-text text-center py-3">Carrito vacío</div>
+        <?php else: ?>
+            <div class="cart-items" style="max-height: 300px; overflow-y: auto;">
+                <?php 
+                $total = 0;
+                foreach($_SESSION['carrito'] as $id => $item): 
+                    $subtotal = $item['precio'] * $item['cantidad'];
+                    $total += $subtotal;
+                ?>
+                    <div class="dropdown-item d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <div class="d-flex align-items-center">
+                            <img src="<?= $item['imagen'] ?>" alt="<?= $item['nombre'] ?>" style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;">
+                            <div>
+                                <h6 class="mb-0"><?= $item['nombre'] ?></h6>
+                                <small><?= $item['cantidad'] ?> x $<?= number_format($item['precio'], 2) ?></small>
+                            </div>
+                        </div>
+                        <div>
+                            <span class="fw-bold">$<?= number_format($subtotal, 2) ?></span>
+                            <a href="eliminar_carrito.php?id=<?= $id ?>" class="text-danger ms-2" onclick="return confirm('¿Eliminar este producto del carrito?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+                        <div class="d-flex justify-content-between align-items-center mt-3 px-2">
+                            <h5 class="mb-0">Total:</h5>
+                            <h5 class="mb-0 fw-bold">$<?= number_format($total, 2) ?></h5>
+                        </div>
+                        <div class="d-grid gap-2 mt-3">
+                            <a href="carrito.php" class="btn btn-primary">Ver Carrito</a>
+                            <?php if(isset($_SESSION['usuario'])): ?>
+                                <a href="carrito.php?comprar=1" class="btn btn-success">Finalizar Compra</a>
+                            <?php else: ?>
+                                <a href="login.php" class="btn btn-warning">Iniciar Sesión para Comprar</a>
+                            <?php endif; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
+            </div>
+    </nav>
+
+    <!--COCTELES-->
+    <section class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>El mejor de la casa</h2>
+                <p>
+                    El Whiskey Sour es un cóctel clásico Es una bebida equilibrada y refrescante, perfecta para cualquier ocasión. 
+                </p>
+                <div>
+                    <img src="./img/whiskey sour.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <section class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>El mimado</h2>
+                <p>
+                    El Bloody Mary es un cóctel famoso, Su base de vodka, jugo de tomate y especias lo convierte en una bebida sabrosa y refrescante.
+                </p>
+                <div>
+                    <img src="./img/bloody mary.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <section class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>El santo</h2>
+                <p>
+                    la Caipirinha es un trago refrescante y fácil de preparar, perfecto para disfrutar en días cálidos.  
+                </p>
+                <div>
+                    <img src="./img/caipirinha.jpeg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <section class="banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h2>THE GOAT</h2>
+                <p>
+                    El Cosmopolitan,es una bebida refrescante y afrutada.
+                </p>
+                <div>
+                    <img src="./img/cosmopolitan.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!--FOOTER-->
+    <footer class="bg-dark p-2 text-center">
+    <div class="container">
+        <p class="text-white">todos los derechos reservados</p>
+    </div>
+
+    </footer>
+
+    <script 
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+        crossorigin="anonymous"></script>
+
+</body>
+</html>
